@@ -1,0 +1,209 @@
+%EX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+
+% This is a simple template for a LaTeX document using the "article" class.
+% See "book", "report", "letter" for other types of document.
+
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+
+%%% Examples of Article customizations
+% These packages are optional, depending whether you want the features they provide.
+% See the LaTeX Companion or other references for full information.
+\usepackage{amsmath}
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+	\hskip -\arraycolsep
+	\let\@ifnextchar\new@ifnextchar
+	\array{#1}}
+\makeatother
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+%%% PAGE DIMENSIONS
+\usepackage{geometry} % to change the page dimensions
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{marvosym}
+\geometry{a4paper} % or letterpaper (US) or a5paper or....
+% \geometry{margin=2in} % for example, change the margins to 2 inches all round
+% \geometry{landscape} % set up the page for landscape
+%   read geometry.pdf for detailed page layout information
+
+\usepackage{graphicx} % support the \includegraphics command and options
+% \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{amssymb}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{mathrsfs}
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+% These packages are all incorporated in the memoir class to one degree or another...
+\usepackage{pgfplots}
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+% (This matches ConTeXt defaults)
+\usepackage[thinc]{esdiff}
+\usepackage{bbold}
+\usepackage{MnSymbol,wasysym}
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+%%% END Article customizations
+
+%%% The "real" document content comes below...
+
+\title{Homework 2}
+\author{Wei Ye\footnote{2nd year PhD student in Economics Department at Fordham University. Email: wye22@fordham.edu}
+    \\ QF8915 - Stochastic Calculus}
+\date{Due on Nov 22, 2022}
+\begin{document}
+\maketitle
+
+\section*{Problem1}
+Find the conditional density of $W(t)$ given $W(t)=y$
+
+\textbf{Solution:}
+
+First, we know the joint density of $f_{W(s)W(t)}(x,y)$ be:
+\begin{align*}
+    f_{W(s)W(t)}(x,y) &= \frac{1}{\sqrt{2\pi s}}e^{-\frac{x^2}{2s}}\cdot \frac{1}{\sqrt{2\pi (t-s)}} e^{-\frac{y^2}{2(t-s)}}\\
+                        &= \frac{1}{2\pi \sqrt{s(t-s)}} e^{-(\frac{x^2}{2s}+\frac{y^2}{2(t-s)})}
+\end{align*}
+Thus, the conditional density would be:
+\begin{align*}
+    f_{W(s)|W(t)} &= \frac{f_{W(s)W(t)}(x,y)}{f_{W(t)}(y)}\\
+                  &= \frac{\frac{1}{2\pi \sqrt{s(t-s)}} e^{-(\frac{x^2}{2s}+\frac{y^2}{2(t-s)})}}{\frac{1}{\sqrt{2\pi t}}e^{-\frac{y^2}{2t}}}\\
+                  &= \frac{\sqrt{t}}{\sqrt{2\pi s(t-s)}} e^{-(\frac{x^2}{2s}+\frac{y^2}{2(t-s)}-\frac{y^2}{2t})}
+\end{align*}
+
+
+\section*{Problem2}
+Show that $W(t)^3 -3tW(t)$ is a martingale.
+
+\textbf{Solution:}
+
+We assume $0\leq s < t$
+\begin{align*}
+    E[W(t)^3 - 3tW(t)|\mathcal{F}_s] &= E[(W(t)-W(s)+W(s))^3 - 3tW(t)|\mathcal{F}_s]\\
+                                    &= E[(W(t)-W(s))^3 + 3(W(t)-W(s))^2W(s) + 3(W(t)-W(s))W(s)^2 + W(s)^3 - 3tW(t)|\mathcal{F}_s]\\
+                                    &=0+3(t-s)W(s)+0+W(s)^3 - 3tW(s)\\
+                                    &=W(s)^3 - 3sW(s)\\
+\end{align*}
+Thus, It's a martingale.
+
+\section*{Problem3}
+Show that $\int_0^t s dW(t) = tW(t) - \int_0^t W(s)ds$.
+
+\textbf{Solution:}
+
+\begin{align*}
+    \int_0^t s dW(t) &= \lim \sum_{j-1} s_j\Delta W_j\\ 
+                    &=\lim \sum_j (s_j W_j - s_{j-1}W_{j-1})-W_j(s_j - s_{j-1})\\
+                    &= \lim \sum_j \Delta(s_j W_j)-\sum_j W_j \Delta s_j\\
+                    &= tW(t) - \int_0^t W(s) ds
+\end{align*}
+
+
+
+\section*{Problem4}
+Find the distribution of Z, where $Z(\omega) = \int_0^1 W(\omega,t)dt$
+
+\textbf{Solution:}
+
+$\int_0^1 W(\omega,t)dt = \lim_{n\rightarrow \infty} \sum_{i = 0}^{n-1} W(\frac{i}{n})\cdot \frac{1}{n}$ Thus,
+\begin{equation*}
+    E(\int_0^1 W(\omega,t)dt ) = E(\lim_{n\rightarrow \infty} \sum_{i = 0}^{n-1} W(\frac{i}{n})\cdot \frac{1}{n}) = 0
+\end{equation*}
+
+$Var(Z(\omega)) = E(\lim_{n\rightarrow \infty} \sum_{i = 0}^{n-1} W(\frac{i}{n})\cdot \frac{1}{n})^2 = \frac{1}{n^2}\cdot \frac{1}{n}(\frac{(n-1)n}{2})=\frac{n-1}{2n^2}=\textcolor{red}{0?}$
+
+So the $Z(\omega)$ is normal distribution with mean and variance as above. 
+
+\section*{Problem5}
+Find the distribution for $\int_0^T e^tdW(t)$.
+
+\textbf{Solution:}
+
+Since $\int_0^T e^t dW(t) = \sum_{t=0}^T-1 e^t(W(t)-W(t-1))$, and as $W(t)$ is normal distribution, the limit of normal distribution is still normal.
+\begin{align*}
+    E\lim\sum_{t=0}^{T-1} e^{t-1}(W(t)-W(t-1)) &= \lim \sum E(e^{t-1}) E(W(t)-W(t-1))\\
+                                                &= 0
+\end{align*}
+\begin{align*}
+    var(\int_0^T e^t dW(t)) &= E(\int_0^T e^t dW(t))^2\\
+                            &= \int_0^T e^{t\cdot 2}dt\\
+                            &= \frac{1}{2}e^{2t}|_0^T\\
+                            &=\frac{1}{2}(e^{2T}-1)
+\end{align*}
+
+Thus, the distribution is $\mathcal{N}(0,\frac{1}{2}(e^{2T}-1))$
+
+
+\section*{Problem6}
+Find mean and variance for $\int_0^T W(t)^3 dW(t)$.
+
+\textbf{Solution:}
+
+\begin{align*}
+    E(\int_0^T W(t)^3 dW(t)) &= \int_0^T E(W(t)^3) dW(t)\\
+                            &= \lim \sum E(W(t))^3 E(W(t)-W(t-1))\\
+                            &= 0
+\end{align*}
+
+\begin{align*}
+    var(\int_0^T w(t)^3 dW(t)) &=E(\int_0^T w(t)^3 dW(t))^2\\
+                                &= \int_0^T W(t)^6 dt\\
+                                &= \textcolor{blue}{a}
+\end{align*}
+a is a number we can get from the last question of HW1, but unfortunately, i didn't derive the result successfuly while doing hw1. 
+
+\section*{Problem7(Bonus Question)}
+Show that $\int_0^t W(s)^2 dW(s) = \frac{1}{3}W(t)^3 - \int_0^t W(t)ds$.
+
+\textbf{Solution:}
+
+\begin{equation*}
+    \int_0^t W(s)^2 dW(s) = \lim_{n\rightarrow \infty} \sum_{i=0}^{n-1}W(t_i)^2[W(t_{i+1})-W(t_i)]
+\end{equation*}
+From quesiton3, $\int_0^t W(t)ds = tW(t)- \int_0^t s dW(t)$
+So $\frac{1}{3}W(t)^3 - \int_0^t W(t)ds = \frac{1}{3}W(t)^3 -tW(t)+ \int_0^t s dW(t)$
+\textcolor{red}{Not done yet, my quesiton is how to deal with the LHS, and compute $W(t)^2$ integral. Check with homework solution later.}
+
+\section*{Problem8(Bonus Question)}
+Find the distribution of $\int_0^T g(s)dW(t)$.
+
+\textbf{Solution:}
+
+\begin{align*}
+    E(\int_0^T g(s)dW(t)) &= E(\lim \sum g(s)(W(t)-W(t-1))\\
+                          &= 0
+\end{align*}
+
+\begin{align*}
+    Var(\int_0^T g(s)dW(t)) &= E(\int_0^T g(s)dW(t))^2\\
+                            &= \int_0^T g(s)^2ds                         
+\end{align*}
+
+
+Thus, the distribution is $\mathcal{N}(0,\int_0^T g(s)^2ds)$
+
+Note: I have a few questions about this problem. If s is unrelevant to T, then this variance becomes a constant number. But I guess there is hidden infomration $0\leq s \leq T$.
+
+
+\end{document}
+

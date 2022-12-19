@@ -1,0 +1,192 @@
+%EX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+
+% This is a simple template for a LaTeX document using the "article" class.
+% See "book", "report", "letter" for other types of document.
+
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+
+%%% Examples of Article customizations
+% These packages are optional, depending whether you want the features they provide.
+% See the LaTeX Companion or other references for full information.
+\usepackage{amsmath}
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+	\hskip -\arraycolsep
+	\let\@ifnextchar\new@ifnextchar
+	\array{#1}}
+\makeatother
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+%%% PAGE DIMENSIONS
+\usepackage{geometry} % to change the page dimensions
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{marvosym}
+\geometry{a4paper} % or letterpaper (US) or a5paper or....
+% \geometry{margin=2in} % for example, change the margins to 2 inches all round
+% \geometry{landscape} % set up the page for landscape
+%   read geometry.pdf for detailed page layout information
+
+\usepackage{graphicx} % support the \includegraphics command and options
+% \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{amssymb}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{mathrsfs}
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+% These packages are all incorporated in the memoir class to one degree or another...
+\usepackage{pgfplots}
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+% (This matches ConTeXt defaults)
+\usepackage[thinc]{esdiff}
+\usepackage{bbold}
+\usepackage{MnSymbol,wasysym}
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+%%% END Article customizations
+
+%%% The "real" document content comes below...
+
+\title{Homework 0}
+\author{Wei Ye\footnote{2nd year PhD student in Economics Department at Fordham University. Email: wye22@fordham.edu}
+    \\ QF8915 - Stochastic Calculus}
+\date{Due on Nov 8, 2022}
+\begin{document}
+\maketitle
+
+\section*{Problem 1}
+\begin{enumerate}[(1)]
+    \item Let $g(X)=Y=e^X$. From the question, X is a r.v distributed as $\mathcal{N}(\mu,\sigma^2)$ with $\mu = 0.06, \sigma = 0.25$.
+        And $g^{-1}(Y)= \ln Y$
+
+        \begin{align*}
+            f_Y(y)&=f_X(g^{-1}(y))|\frac{dg^{-1}(y)}{dy}|\\
+                  &=f_X(\ln y)|\frac{d \ln y}{d y}|\\
+                  &=[\frac{4}{\sqrt{2\pi}} e^{-8(\ln y -0.06)^2}]\frac{1}{y}\\
+                  &=\frac{4}{y\sqrt{2\pi}}e^{-8(\ln y -0.06)^2}
+        \end{align*}
+    
+    \item \begin{align*}
+        EY &= \int_0^\infty yf_Y(y) dy\\
+            &= \int_0^\infty y\cdot \frac{4}{y\sqrt{2\pi}}e^{-8(\ln y -0.06)^2} dy\\
+            &= \frac{4}{\sqrt{2\pi}} \int_0^\infty e^{-8(\ln y -0.06)^2} dy\\
+            &= e^{\frac{73}{800}}
+    \end{align*}
+    
+    \item \begin{align*}
+        EY &= E\exp(X)\\
+            &= \int_{-\infty}^{\infty} e^x f_X(x) dx\\
+            &= \int_{-\infty}^{\infty} e^x \frac{4}{\sqrt{2\pi}} e^{-8(x-0.06)^2} dx\\
+            &= \frac{4}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{x-8(x-0.06)^2} dx\\
+            &= e^{\frac{73}{800}}
+    \end{align*}
+    Note: I used online calculator\footnote{https://www.integral-calculator.com/} to compute the last step with respect to integral. like in (3), the integral result is $\frac{e^{\frac{73}{800}\sqrt{\pi}}}{2^{\frac{2}{3}}}$, then we multiply $\frac{4}{\sqrt{2\pi}}$ to get our result.
+
+    It's always easier to compute integral of x or $x^2$ instead of $\ln$, thus, as in the comment, the second way is better in term of computation\footnote{for (2) and (3), it can be computed in any online integral calculator. It's not wiseful to compute by hand.} 
+\end{enumerate}
+
+
+
+\section*{Problem 2}
+\begin{enumerate}[(1)]
+    \item Since $\mathcal{F}$ is $\sigma$-algebra of $\Omega$, so the sets in $\mathcal{F}$ is as below(the num is $2^5$):
+    \begin{equation*}
+        \begin{split}        
+        \{\emptyset, \Omega, \{a\}\,\{b\},\{c\},\{d\},\{e\},\{a,b\},\{a,c\},\{a,d\},\{a,e\},\{b,c\},\{b,d\},\{b,e\},\{c,d\},\{c,e\},\{d,e\}\\
+        \{a,b,c\}, \{a,b,d\},\{a,b,e\},\{a,c,d\},\{a,c,e\},\{a,d,e\},\{b,c,d\},\{b,c,e\},\{b,d,e\},\{c,d,e\},\\
+        \{a,b,c,d\},\{a,b,c,e\},\{a,b,d,e\},\{a,c,d,e\},\{b,c,d,e\}  \}
+        \end{split}
+    \end{equation*}
+
+    \item Since x is a r.v, so the sets in $\sigma(x)$ is:
+    \begin{equation*}
+        \{\emptyset, \Omega, \{a,b,c\},\{d,e\}\}
+    \end{equation*}
+
+    \item To derive $E(Y|X)$, let V be conditional expectation $E(Y|X)$. Since it's on $\sigma_x$-algebra, so we can assume
+    $\alpha = V(a)=V(b)=V(c)$, and $\beta = V(d) = V(e)$.
+    
+    By partial averaging, we can easily get:
+     \begin{equation*}
+        E(V\cdot \mathcal{I}_A) = E(Y \cdot \mathcal{I}_A) \quad \quad A\in \sigma(X)
+     \end{equation*}
+    Therefore:
+    \begin{equation*}
+        V(a)P(a)+V(b)P(b)+V(c)P(c) = Y(a)P(a)+Y(b)P(b)+Y(c)P(c)
+    \end{equation*}
+    \begin{equation*}
+        \alpha(P(a)+P(b)+P(c)) = Y(a)P(a)+Y(b)P(b)+Y(c)P(c)
+    \end{equation*}
+    The $\alpha$ will be:
+    \begin{align*}
+        \alpha &= \frac{Y(a)P(a)+Y(b)P(b)+Y(c)P(c)}{P(a)+P(b)+P(c)}\\
+                &= \frac{P(a)-2P(b)+P(c)}{\frac{1}{6}+\frac{1}{6}+\frac{1}{4}}\\
+                &= \frac{\frac{1}{12}}{\frac{7}{12}}\\
+                &= \frac{1}{7}
+    \end{align*}
+    Now, we derive $\beta$:
+    \begin{equation*}
+        V(d)P(d)+V(e)P(e)=Y(d)P(d)+Y(e)P(e)
+    \end{equation*}
+    \begin{equation*}
+        \beta(P(d)+P(e))= -2P(d)-2P(e)
+    \end{equation*}
+    \begin{align*}
+        \beta &= \frac{-2P(d)-2P(e)}{P(d)+P(e)}\\
+            &= \frac{-\frac{1}{2}-\frac{1}{3}}{\frac{1}{4}+\frac{1}{6}}\\
+            &=\frac{-\frac{5}{6}}{\frac{5}{12}}\\
+            &=-2
+    \end{align*}
+
+\item $Y^2(a)=1, Y^2(b)= 4, Y^2(c)=1, Y^2(d)=4, Y^2(e)=1$. Let $V=E(Y^2|X)$, Same as (3) by partial averaging property, we can get
+    $V(a)=V(b)=V(c)=\alpha$, $V(d)=V(e)=\beta$.
+    Now, begin deriving $\alpha$:
+        \begin{equation*}
+            \alpha(P(a)+P(b)+P(c)) = Y^2(a)P(a)+Y^2(b)P(b)+Y^2(c)P(c)
+        \end{equation*}
+        \begin{align*}
+            \alpha &= \frac{P(a)+4P(b)+P(c)}{P(a)+P(b)+P(c)}\\
+                    &= \frac{\frac{1}{6}+\frac{1}{4}+\frac{4}{6}}{\frac{1}{6}+\frac{1}{6}+\frac{1}{4}}\\
+                    &=\frac{13}{7}
+        \end{align*}
+
+    Now, begin deriving $\beta$:
+    \begin{equation*}
+        V(d)P(d)+V(e)P(e)=Y^2(d)P(d)+Y^2(e)P(e)
+    \end{equation*}
+    \begin{align*}
+        \beta &= \frac{4(P(d)+P(e))}{P(d)+P(e)}\\
+            &= 4
+    \end{align*}
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+\end{document}

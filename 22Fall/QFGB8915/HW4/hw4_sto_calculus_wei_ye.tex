@@ -1,0 +1,160 @@
+%EX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+
+% This is a simple template for a LaTeX document using the "article" class.
+% See "book", "report", "letter" for other types of document.
+
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+
+%%% Examples of Article customizations
+% These packages are optional, depending whether you want the features they provide.
+% See the LaTeX Companion or other references for full information.
+\usepackage{amsmath}
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+	\hskip -\arraycolsep
+	\let\@ifnextchar\new@ifnextchar
+	\array{#1}}
+\makeatother
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+%%% PAGE DIMENSIONS
+\usepackage{geometry} % to change the page dimensions
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{marvosym}
+\geometry{a4paper} % or letterpaper (US) or a5paper or....
+% \geometry{margin=2in} % for example, change the margins to 2 inches all round
+% \geometry{landscape} % set up the page for landscape
+%   read geometry.pdf for detailed page layout information
+
+\usepackage{graphicx} % support the \includegraphics command and options
+% \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{amssymb}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{mathrsfs}
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+% These packages are all incorporated in the memoir class to one degree or another...
+\usepackage{pgfplots}
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+% (This matches ConTeXt defaults)
+\usepackage[thinc]{esdiff}
+\usepackage{bbold}
+\usepackage{MnSymbol,wasysym}
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+%%% END Article customizations
+
+%%% The "real" document content comes below...
+
+\title{Homework 4}
+\author{Wei Ye\footnote{2nd year PhD student in Economics Department at Fordham University. Email: wye22@fordham.edu}
+    \\ QF8915 - Stochastic Calculus}
+\date{Due on Dec 16, 2022}
+\begin{document}
+\maketitle
+
+\section*{Problem 1}
+Apply Ito's formula to express $Y_t = \log(1+(X_t)^2)$ as an Ito process.
+
+\textbf{Solution:}
+
+First, we assume $Y_t = f(X_t) = \log(1+(X_t)^2)$. Thus, $f'(X_t) = \frac{2X_t}{1+X_t^2}$, and $f''(X_t) = \frac{2(1+X_t^2)-2X_t(2X_t)}{(1+X_t^2)^2} = \frac{2(1-X_t^2)}{(1+X_t^2)^2}$
+
+
+\begin{align*}
+    dY_t &= f'(X_t)dX_t + \frac{1}{2}f''(X_t)dX_tdX_t\\
+         &= \frac{2X_t}{1+X_t^2}[W(t)dt +W(t)^2dW_t] +\frac{1}{2}\cdot\frac{2(1-X_t^2)}{(1+X_t^2)^2}W(t)^4dt\\
+         &= [\frac{2X_t^2}{1+X_t^2}W(t)+\frac{1-X_t^2}{(1+X_t^2)^2}W(t)^4]dt+ \frac{2X_t}{1+X_t^2}[W(t)]^2dW(t)
+\end{align*}
+
+Thus:
+\begin{equation*}
+    Y_t = Y_0+ \int_0^t \frac{2X_s}{1+X_s}W(s)+ \frac{1-X_s^2}{(1+X_s^2)^2}W(s)^4ds + \int_0^t \frac{2X_s}{1+X_s^2}W(s)^2 dW(s)
+\end{equation*}
+
+\section*{Problem 2}
+Let $Y_t = (1+t)X_t$. Use Ito's formula to find out what stochastic differential equation $Y_t$ satisfies? Identify $Y_t$ as a Brownian Motion.
+
+\textbf{Solution:}
+
+Let $Y_t = f(t,X_t) = (1+t)X_t$. Therefore, $f_t(t,X_t) = X_t$, $f_x(t,X_t) = 1+t$, and $f_{xx} = 0$. 
+\begin{align*}
+    dY_t &= f_t(t,X_t)dt + f_x(t,X_t)dX_t + \frac{1}{2}f_{xx}dX_t dX_t\\
+        &= X_t dt + (1+t)dX_t\\
+        &= X_t dt + (1+t)[-\frac{1}{1+t}X_td_t + \frac{1}{1+t}dW(t)]\\
+        &= X_t dt- X_tdt +dW_t\\
+        &= dW_t
+\end{align*}
+
+
+Thus, we can easily see $Y_t$ is brownian motion.
+
+\section*{Problem 3}
+Solve $dX_t = X_tdt + dW(t)$.
+
+\textbf{Solution:}
+
+Set an equation\footnote{For the convenience of our computation, I let $\beta$ in the lecture is equal to -1, only in this way, we can cancel out $X_t$ in later steps.} $f(t,X_t) = e^{-t}X_t$
+
+\begin{align*}
+    df(t,X_t) &= -e^{-t}X_tdt + e^{-t}[X_tdt + dW_t]\\
+              &= -e^{-t}X_tdt + e^{-t}X_tdt + e^{-t}dW_t\\
+              &= e^{-t}dW(t)
+\end{align*}
+\begin{equation*}
+    e^{-t}X_t = X_0 + \int_0^t e^{-u}dW(u)
+\end{equation*}
+Therefore:
+\begin{equation*}
+    X_t = e^tX_0 +e^t \int_0^t e^{-u}dW(u)
+\end{equation*}
+\begin{equation*}
+    E(X_t) = e^tX_0
+\end{equation*}
+
+
+\section*{Problem 4}
+Solve $dX_t = -X_td_t +e^{-t}dW(t)$
+
+\textbf{Solution:}
+
+Let $f(t,X_t) = e^tX_t$
+\begin{align*}
+    df(t,X_t) &= e^tX_tdt + e^t[-X_tdt + e^{-t}dW(t)]\\
+             &= dW(t)
+\end{align*}
+Hence,
+\begin{equation*}
+    e^tX_t = x_0 + \int_0^t dW_t
+\end{equation*}
+\begin{equation*}
+    X_t = e^{-t}X_0 +e^{-t}\int_0^t dW_t
+\end{equation*}
+
+\begin{align*}
+    E(X_t) &= e^{-t}X_0 +e^{-t}\int_0^t dW_u\\
+        &= e^{-t}X_0
+\end{align*}
+
+\end{document}
