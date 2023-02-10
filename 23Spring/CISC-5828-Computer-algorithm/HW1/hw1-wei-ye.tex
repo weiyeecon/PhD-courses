@@ -1,0 +1,118 @@
+%EX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+
+% This is a simple template for a LaTeX document using the "article" class.
+% See "book", "report", "letter" for other types of document.
+
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+
+%%% Examples of Article customizations
+% These packages are optional, depending whether you want the features they provide.
+% See the LaTeX Companion or other references for full information.
+\usepackage{amsmath}
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+	\hskip -\arraycolsep
+	\let\@ifnextchar\new@ifnextchar
+	\array{#1}}
+\makeatother
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+%%% PAGE DIMENSIONS
+\usepackage{geometry} % to change the page dimensions
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{marvosym}
+\geometry{a4paper} % or letterpaper (US) or a5paper or....
+% \geometry{margin=2in} % for example, change the margins to 2 inches all round
+% \geometry{landscape} % set up the page for landscape
+%   read geometry.pdf for detailed page layout information
+
+\usepackage{graphicx} % support the \includegraphics command and options
+% \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{amssymb}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{mathrsfs}
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+% These packages are all incorporated in the memoir class to one degree or another...
+\usepackage{pgfplots}
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+% (This matches ConTeXt defaults)
+\usepackage[thinc]{esdiff}
+\usepackage{bbold}
+\usepackage{MnSymbol,wasysym}
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+%%% END Article customizations
+
+%%% The "real" document content comes below...
+
+\title{Homework 1}
+\author{Wei Ye\footnote{2nd year PhD student in Economics Department at Fordham University. Email: wye22@fordham.edu}
+    \\ CISC5825 - Computer Algorithm}
+\date{Due on Feb 6, 2023}
+\begin{document}
+\maketitle
+
+\section*{Problem1}
+Express function below in terms of growth functions using the best fit.
+\begin{enumerate}[a)]
+    \item $2^n + n^2 + n$
+    \item $(\frac{n+3}{5})^2$
+\end{enumerate}
+\textbf{Solution:}
+\begin{enumerate}[a)]
+    \item Since $2^n >= n^2$ in general, thus, $2^n +n^2 + n \leq 2^n + 2^n + 2^n = 3 \cdot 2^n$. $c_1 = 3$, $g(n)= 2^n$, and $n_0 = 1$. The big O notion is $O(2^n)$.
+    \item \begin{align*}
+        (\frac{n+3}{5})^2 &= \frac{n^2 + 6n + 9}{25}\\
+                         &= \frac{n^2}{25} + \frac{6n}{25} + \frac{9}{25}
+    \end{align*}
+    Thus,
+    \begin{equation*}
+        \frac{n^2}{25}\leq f(n) \leq \frac{n^2}{25} + \frac{6n^2}{25} + \frac{9n^2}{25}= \frac{16}{25}n^2
+    \end{equation*}
+    $c_1 = \frac{1}{25}$, $c_2 = \frac{16}{25}$, $n_0 = 1$, and $g(n) = n^2$. Thus it's $\Theta(n^2)$
+\end{enumerate}
+
+
+
+
+\section*{Problem 2}
+Determine which of the two functions in the pair of of the function below grows faster: $(n)^{\sqrt{n}}$ vs $(\sqrt{n})^n$
+
+\textbf{Solution:}
+
+Make monotone transformation for each of the functions. $\lg(n^{\sqrt{n}})= \sqrt{n}\lg n$, $\lg ((\sqrt{n})^n)= n\lg \sqrt{n}$. Make monotone transformation again,
+$\lg \sqrt{n}\lg n = \lg (\sqrt{n}\lg n) = \lg \sqrt{n} + \lg\lg n = \frac{1}{2}\lg n + \lg \lg n$, $\lg n\lg \sqrt{n} = \lg n + \lg \frac{1}{2}\lg n$. 
+
+WLOG let $\lg n = Z$, thus compare $\frac{1}{2}Z + \lg Z $ and $Z+ \lg \frac{1}{2}Z$
+
+Make substraction: $Z+ \lg \frac{1}{2}Z -(\frac{1}{2}Z + \lg Z) = \frac{1}{2}Z +\lg \frac{\frac{1}{2}Z}{Z} = \frac{1}{2}Z +\lg \frac{1}{2} = M$.
+
+When $M \geq 0 \rightarrow \frac{1}{2}Z \geq -\lg \frac{1}{2}  \rightarrow Z \geq \lg (\frac{1}{2})^{-2} = \lg 4 \rightarrow \lg n \geq \lg 4$
+
+When $n \geq 4 $, $(\sqrt{n})^n \geq (n)^{\sqrt{n}}$, otherwise, $(\sqrt{n})^n < (n)^{\sqrt{n}}$
+
+Thus, $(\sqrt{n})^n$ grows faster.
+
+\end{document}
